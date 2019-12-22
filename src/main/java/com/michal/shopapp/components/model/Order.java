@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "order")
+@Table(name = "shop_order")
 public class Order {
 
     @Id
@@ -18,7 +18,7 @@ public class Order {
     private String orderDate;
     private String orderCompletionDate;
     @OneToMany(mappedBy = "order")
-    private List<Order> orders;
+    private List<Product> products;
     @ManyToOne
     private User user;
 
