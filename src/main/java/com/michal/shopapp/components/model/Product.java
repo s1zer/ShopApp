@@ -7,16 +7,15 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "shop_user")
-public class User {
+@Table(name = "product")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String lastName;
-    private String birthDate;
-    private String firstName;
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    private String name;
+    private double price;
+    @ManyToOne
+    private Order order;
 
 }
