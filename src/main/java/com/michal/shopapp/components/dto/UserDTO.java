@@ -1,12 +1,13 @@
 package com.michal.shopapp.components.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
 
     private Long id;
@@ -16,8 +17,8 @@ public class UserDTO {
     private String lastName;
     @NotBlank
     private String email;
+    @NotBlank(message = "Birth date is mandatory!")
     private String birthDate;
-    @NotBlank
     private boolean isActive;
 
 }
