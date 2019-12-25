@@ -1,6 +1,8 @@
 package com.michal.shopapp.components.mapper;
 
-public interface GenericMapper<T> {
+public interface GenericMapper<E, D> {
 
-    public T getAll();
+    public E convertToEntity(D d);
+
+    public D convertToDto(E e);
 }
