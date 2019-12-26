@@ -1,9 +1,10 @@
 package com.michal.shopapp.components.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -11,11 +12,11 @@ import javax.validation.constraints.NotNull;
 public class UserDTO {
 
     private Long id;
-    @NotBlank
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "Last name is mandatory!")
     private String lastName;
-    @NotBlank
+    @NotBlank(message = "Email is mandatory!")
     private String email;
     @NotBlank(message = "Birth date is mandatory!")
     private String birthDate;

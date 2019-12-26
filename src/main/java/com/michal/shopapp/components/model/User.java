@@ -1,8 +1,6 @@
 package com.michal.shopapp.components.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,6 +20,7 @@ public class User {
     private String lastName;
     @NotBlank(message = "Email is mandatory")
     private String email;
+    @NotBlank(message = "Birth date is mandatory")
     private String birthDate;
     private boolean isActive;
     @OneToMany(mappedBy = "user")
