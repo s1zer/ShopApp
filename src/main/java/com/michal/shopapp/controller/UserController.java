@@ -24,7 +24,7 @@ public class UserController {
     @ResponseStatus(CREATED)
     public UserDTO saveUser(@Valid @RequestBody UserDTO userDTO) {
         if (userDTO.getId() == null) {
-            return userService.saveUser(userDTO);
+            return userService.saveDefinition(userDTO);
         } else {
             throw new ResponseStatusException(BAD_REQUEST, GlobalConstants.ID_HAS_TO_BE_NULL);
         }
@@ -33,25 +33,25 @@ public class UserController {
     @GetMapping("/{id}")
     @ResponseStatus(OK)
     public UserDTO getUser(@PathVariable Long id) {
-        return userService.findUserById(id);
+        return userService.getDefinition(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(OK)
     public UserDTO putUser(@Valid @RequestBody UserDTO userDTO, @PathVariable Long id) {
-        return userService.putUser(userDTO, id);
+        return userService.putDefinition(userDTO, id);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(OK)
     public UserDTO patchUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
-        return userService.patchUser(userDTO, id);
+        return userService.patchDefinition(userDTO, id);
     }
 
 
     @DeleteMapping("/{id}")
     @ResponseStatus(OK)
     public void deleteUser(@PathVariable Long id) {
-        userService.removeUserByID(id);
+        userService.removeDefinition(id);
     }
 }
