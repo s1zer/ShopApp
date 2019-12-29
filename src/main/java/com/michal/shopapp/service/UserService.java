@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements GenericService<UserDTO> {
 
     private UserRepository userRepository;
     private UserMapper userMapper;
@@ -21,21 +21,24 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public UserDTO findUserById(Long userId) {
-        return userRepository.findById(userId)
+    @Override
+    public UserDTO getDefinition(Long id) {
+        return userRepository.findById(id)
                 .map(userMapper::convertToDto).
                         orElseThrow(() -> new MyResourceNotFoundException(GlobalConstants.USER_NOT_FOUND));
     }
 
-    public UserDTO saveUser(UserDTO userDTO) {
+    @Override
+    public UserDTO saveDefinition(UserDTO userDTO) {
         User savedUser = userRepository.save(userMapper.convertToEntity(userDTO));
         return userMapper.convertToDto(savedUser);
     }
 
-    public UserDTO putUser(UserDTO userDTO, Long userID) {
-        Optional<User> userToUpdate = userRepository.findById(userID);
+    @Override
+    public UserDTO putDefinition(UserDTO userDTO, Long id) {
+        Optional<User> userToUpdate = userRepository.findById(id);
         if (userToUpdate.isPresent()) {
-            userDTO.setId(userID);
+            userDTO.setId(id);
             User updatedUser = userRepository.save(userMapper.convertToEntity(userDTO));
             return userMapper.convertToDto(updatedUser);
         } else {
@@ -43,8 +46,9 @@ public class UserService {
         }
     }
 
-    public UserDTO patchUser(UserDTO userDTO, Long userID) {
-        Optional<User> userToUpdate = userRepository.findById(userID);
+    @Override
+    public UserDTO patchDefinition(UserDTO userDTO, Long id) {
+        Optional<User> userToUpdate = userRepository.findById(id);
         if (userToUpdate.isPresent()) {
             userToUpdate.ifPresent(u -> {
                 if (userDTO.getFirstName() == null) userDTO.setFirstName(u.getFirstName());
@@ -62,9 +66,10 @@ public class UserService {
         }
     }
 
-    public void removeUserByID(Long userID) {
-        if (userRepository.existsById(userID)) {
-            userRepository.deleteById(userID);
+    @Override
+    public void removeDefinition(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
         } else {
             throw new MyResourceNotFoundException(GlobalConstants.USER_NOT_FOUND);
         }
