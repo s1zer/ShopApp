@@ -60,17 +60,12 @@ public class UserControllerUnitTest {
     @Test
     void shouldBeCreatedNewUser() throws Exception {
 
-        UserDTO userToSave = UnitTestUtils.createNewUserDTO();
-        UserDTO userSaved = new UserDTO();
-        userSaved.setFirstName(userToSave.getFirstName());
-        userSaved.setLastName(userToSave.getLastName());
-        userSaved.setEmail(userToSave.getEmail());
-        userSaved.setBirthDate(userToSave.getBirthDate());
-        userSaved.setId(null);
+        UserDTO userToSave = UnitTestUtils.createNewNoIDUserDTO();
+        UserDTO expectedSavedUser = UnitTestUtils.createNewUserDTO();
+        userToSave.setId(null);
 
-//        given(userService.saveDefinition(userToSave)).willReturn(userSaved);
-        when(userService.saveDefinition(any(UserDTO.class))).thenReturn(userSaved);
-        String userSavedJSON = objectMapper.writeValueAsString(userSaved);
+        when(userService.saveDefinition(any(UserDTO.class))).thenReturn(expectedSavedUser);
+        String userSavedJSON = objectMapper.writeValueAsString(userToSave);
 
 
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
@@ -79,8 +74,65 @@ public class UserControllerUnitTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", equalTo("ExampleFirstName-" + LocalDate.now())))
                 .andReturn().getResponse().getContentAsString();
+    }
+
+    @Test
+    void shouldNotCreateWrongUser() throws Exception {
+        UserDTO userToSave = UnitTestUtils.createNewNoIDUserDTO();
+        userToSave.setId(1L);
+
+        String userSavedJSON = objectMapper.writeValueAsString(userToSave);
 
 
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(userSavedJSON))
+                .andExpect(status().isBadRequest());
+        verify(userService, never()).saveDefinition(any(UserDTO.class));
+    }
+
+    @Test
+    void shouldPutNewUser() throws Exception {
+        UserDTO userToPut = UnitTestUtils.createNewNoIDUserDTO();
+        UserDTO expectedUser = UnitTestUtils.createNewUserDTO();
+        Long userID = 1L;
+        expectedUser.setId(userID);
+
+        when(userService.putDefinition(userToPut, userID)).thenReturn(expectedUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userToPut)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.lastName", equalTo("ExampleLastName-" + LocalDate.now())));
+    }
+
+    @Test
+    void shouldPatchUser() throws Exception {
+        UserDTO userToPatch = UnitTestUtils.createNewNoIDUserDTO();
+        userToPatch.setFirstName("ChangedFirstName");
+        UserDTO expectedUser = UnitTestUtils.createNewUserDTO();
+        expectedUser.setFirstName(userToPatch.getFirstName());
+        Long userID = 1L;
+        expectedUser.setId(userID);
+
+        when(userService.patchDefinition(userToPatch, userID)).thenReturn(expectedUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch(BASE_URL + "1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userToPatch)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo("ChangedFirstName")));
+    }
+
+    @Test
+    void shouldDeleteUser() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL + "1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(userService, times(1)).removeDefinition(anyLong());
     }
 
 }
