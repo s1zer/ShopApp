@@ -25,6 +25,19 @@ public class UnitTestUtils {
         return user;
     }
 
+    public static UserDTO createNewNoIDUserDTO() {
+        UserDTO user = new UserDTO();
+        LocalDate today = LocalDate.now();
+        user.setId(null);
+        user.setFirstName("ExampleFirstName-" + today);
+        user.setLastName("ExampleLastName-" + today);
+        user.setBirthDate(today.toString());
+        user.setActive(false);
+        user.setEmail("ExampleEmail-" + today);
+
+        return user;
+    }
+
     public static UserDTO createNewUserDTO() {
         UserDTO user = new UserDTO();
         LocalDate today = LocalDate.now();
@@ -37,4 +50,5 @@ public class UnitTestUtils {
 
         return user;
     }
+
 }
