@@ -31,6 +31,7 @@ class UserInfo extends Component {
 
     render() {
         const user = this.state.user;
+        console.log("user: " + user);
         return (
             <div>
                 <h1>Welcome {user ? user.firstName : ""}</h1>
