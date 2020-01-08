@@ -1,0 +1,35 @@
+header {
+    position: relative;
+    overflow: hidden;
+}
+
+form.searchForm {
+    text-align: center;
+}
+
+input.searchBar {
+    text-indent: 10px;
+    margin-top: 30px;
+    height: 35px;
+    width: 400px;
+}
+
+button.searchButton {
+    height: 35px;
+    background-color: chocolate;    
+}
+
+select.searchSelect {
+    height: 35px;
+    background-color: azure;
+}
+
+img.homeImage {
+    float: left;
+    max-width: 150px;
+    max-height: 150px;
+}
+
+button.homeButton {
+    margin-left: 200px;
+}
