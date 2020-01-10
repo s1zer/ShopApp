@@ -5,6 +5,7 @@ header {
 
 form.searchForm {
     text-align: center;
+    font-size: small;
 }
 
 input.searchBar {
@@ -16,12 +17,14 @@ input.searchBar {
 
 button.searchButton {
     height: 35px;
-    background-color: chocolate;    
+    background-color: chocolate;
 }
 
 select.searchSelect {
     height: 35px;
+    width: 100px;
     background-color: azure;
+    text-align: center;
 }
 
 img.homeImage {
@@ -33,3 +36,20 @@ img.homeImage {
 button.homeButton {
     margin-left: 200px;
 }
+
+select {
+    text-align-last: right;
+    padding-right: 29px;
+    direction: rtl;
+}
+
+nav.navbarHeader {
+    list-style-type: none;
+}
+
+nav.navbarHeader li {
+    display: block;
+}
+
+
+
