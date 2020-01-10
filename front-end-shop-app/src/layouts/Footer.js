@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Footer = () => {
-    return <div>Footer</div>
+
+    const footerMessage = "@Michal Wierzbicki 2020"
+    return <div>{footerMessage}</div>
 }
 
 export default Footer;

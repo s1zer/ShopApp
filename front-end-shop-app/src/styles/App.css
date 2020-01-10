@@ -2,7 +2,7 @@ div .app {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    width: 90%;
+    width: 100%;
     background-color: rebeccapurple;
 }
 
@@ -30,6 +30,6 @@ footer {
     color: white;
     padding: 10px 0;
     text-align: center;
-    text-transform: uppercase;
     background-color: black;
+    font-size: small;
 }
